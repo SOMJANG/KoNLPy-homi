@@ -1,8 +1,5 @@
-# KoNLPy-gRPC
-Redesigned KoNLPy (Wrapper) for Usability and Portability with gRPC.
-
-## Try Now!
-[![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/minhoryang/KoNLPy-gRPC)
+# KoNLPy-homi
+Redesigned KoNLPy (Wrapper) for Usability and Portability with gRPC(Homi).
 
 ## Requirements:
 ```bash
@@ -44,37 +41,6 @@ poetry publish --build -r test
 poetry run twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 ```
 
-## TODO
-- [x] [P0] client.py will be a konlpy-alike module.
-  - [x] [P0] KoNLPy monkey-patcher
-- [x] [P1] Packaging with Poetry `pyproject.toml`.
-  - [x] PyPI Register
-  - [ ] Find lowerbound-version of requirements. <!-- poetry debug:resolve -->
-- [P1] gRPC Proto Compile
-- [P1] In-house tool: `manage.py`
-<!--
-  - doit
-  - bazel
-  - bump2version
-  - poetry-dynamic-versioning
-  - pytest.ini to pyproject.toml
--->
-- [P1] KoNLPy Version Matching (set minimum) and Follow-up
-- [P1] gRPC retry/timeout/error_handling logic <!-- google.api_core.* or grpc-retry-py -->
-- [x] [P1] gRPC reflection
-- [P1] gRPC heartbeat
-- [x] [P1] gRPC Gateway (gRPC to JSON)
-- [x] [P2] Dockerize / Register
-  - k8s and istio?
-- [P2] CI
-- [x] [P3] Button for deploying this to AWS/GCS/Azure now! (and connect by README.)
-  - [x] [aizine](https://ainize.ai/deployment/minhoryang/konlpy-grpc)
-  - [ ] AWS/GCS/Azure
-- [P3] CustomDic?
-- [P3] Stream I/O
-- [P3] Redesign tests/ with grpc-testing
-- [P4] Java Edition for KoNLPy-gRPC-Server
-  - gRPC protos deploy/versioning
 
 ## Additional Links
 - [KoNLPy/KoNLPy](https://github.com/konlpy/konlpy)
