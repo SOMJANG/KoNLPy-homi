@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+import "google/protobuf/struct.proto";
+
+package konlpy_homi.v0alpha;
+
+
+message StringRequest {
+  string payload = 1;
+  google.protobuf.Struct options = 2;
+}
+message Tuple {
+  string keyword = 1;
+  string tag = 2;
+}
+
+message ListOfTuple{
+  repeated Tuple results = 1;
+}
+
+message ListOfListOfTuple{
+  repeated ListOfTuple results = 1;
+}
+
+message TupleDoubleArrayResponse{
+  repeated ListOfListOfTuple results = 1;
+   google.protobuf.Struct options = 2;
+
+}
+message TupleArrayResponse {
+  repeated Tuple results = 1;
+  google.protobuf.Struct options = 2;
+}
+
+
+message StringArrayResponse {
+  repeated string results = 1;
+  google.protobuf.Struct options = 2;
+}
+
+message StringResponse {
+  string results = 1;
+  google.protobuf.Struct options = 2;
+}
+
+message StructResponse {
+  google.protobuf.Struct result = 1;
+  google.protobuf.Struct options = 2;
+}

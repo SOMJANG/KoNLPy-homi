@@ -1,0 +1,9 @@
+-r requirements.txt
+setuptools>=49.2.0
+wheel>=0.34.2
+twine>=3.2.0
+flake8>=3.8.3
+pytest-cov>=2.10.0
+cryptography>=3.1.1
+grpcio-tools
+grpc_requests

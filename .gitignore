@@ -165,3 +165,7 @@ tags
 
 ### pytest-benchmark
 .benchmarks
+
+.idea/
+
+.venv/

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+import "konlpy_homi/v0alpha/global.proto";
+
+package konlpy_homi.v0alpha;
+
+service Komoran {
+  rpc Pos(StringRequest) returns (TupleArrayResponse);
+  rpc Nouns(StringRequest) returns (StringArrayResponse);
+  rpc Morphs(StringRequest) returns (StringArrayResponse);
+}
+

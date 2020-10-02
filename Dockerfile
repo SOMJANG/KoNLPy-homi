@@ -1,31 +1,29 @@
-FROM golang:latest AS gateway-build
-WORKDIR /build
-COPY konlpy_grpc_gateway/go.mod konlpy_grpc_gateway/go.sum ./
-RUN go mod download
-COPY konlpy_grpc_gateway .
-RUN go build -o konlpy_grpc_gateway .
+FROM python:3
 
-FROM python:latest AS swagger-merge
-WORKDIR /build
-COPY --from=gateway-build /build/_generated/ /build/konlpy_grpc_gateway/_generated/
-COPY tools/merge.swagger.py merge.swagger.py
-RUN python3 merge.swagger.py
+ENV PYTHONUNBUFFERED 1
+ENV PKG_DIR /tmp/pkg
+ENV SRC_DIR /opt
 
-FROM minhoryang/konlpy:v0.5.2 AS konlpy-grpc
-LABEL maintainer="Minho Ryang <minhoryang@gmail.com>"
-LABEL org.label-schema.schema-version="1.0"
-LABEL org.label-schema.name="minhoryang/konlpy-grpc"
-LABEL org.label-schema.description="KoNLPy gRPC/HTTP Server"
-LABEL org.label-schema.version="v0.1.0"
+ENV JAVA_HOME /usr/lib/jvm/java-1.7-openjdk/jre
+RUN apt-get update
+RUN apt-get install -y g++ default-jdk
 
-WORKDIR /app
-COPY --from=ochinchina/supervisord:latest /usr/local/bin/supervisord /usr/local/bin/supervisord
-COPY --from=gateway-build /build/konlpy_grpc_gateway /app/konlpy_grpc_gateway
-COPY --from=swagger-merge /build/konlpy_grpc_gateway/_generated/index.swagger.json /app/_generated/index.swagger.json
-COPY tools/supervisor.conf /app/supervisor.conf
+# install mecab
+RUN apt-get install -y curl git
+RUN curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh | /bin/bash
 
-# RUN python3 -m pip install konlpy-grpc
-RUN python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ konlpy-grpc
+COPY requirements.txt ${PKG_DIR}/requirements.txt
 
-CMD ["/usr/local/bin/supervisord", "-c", "supervisor.conf"]
-ENTRYPOINT []
+RUN pip install --upgrade pip && \
+    pip install --upgrade -r ${PKG_DIR}/requirements.txt
+
+RUN rm -rf /tmp/*
+ARG CACHEBUST=1
+COPY src ${SRC_DIR}
+WORKDIR ${SRC_DIR}
+
+ENV PORT 50051
+EXPOSE ${PORT}
+
+ENTRYPOINT ["homi"]
+CMD ["run","-w","100","-p","50051","-h","0.0.0.0"]
