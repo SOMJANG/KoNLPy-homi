@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "konlpy_homi/api/v0alpha/global.proto";
+
+package konlpy_homi.api.v0alpha;
+
+service Hannanum {
+  rpc Pos(StringRequest) returns (TupleArrayResponse);
+  rpc Nouns(StringRequest) returns (StringArrayResponse);
+  rpc Morphs(StringRequest) returns (StringArrayResponse);
+  rpc Analyze(StringRequest) returns (TupleDoubleArrayResponse);
+}
+

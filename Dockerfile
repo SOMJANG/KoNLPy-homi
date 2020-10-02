@@ -24,6 +24,7 @@ WORKDIR ${SRC_DIR}
 
 ENV PORT 50051
 EXPOSE ${PORT}
+ENV PYTHONPATH "${PYTONPATH}:${SRC_DIR}"
 
 ENTRYPOINT ["homi"]
-CMD ["run","-w","100","-p","50051","-h","0.0.0.0"]
+CMD ["run","konlpy_homi/app.py","-w","100","-p","50051"]

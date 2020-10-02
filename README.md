@@ -14,7 +14,7 @@ cd src && homi run
 
 ## Make Stubs
 ```bash
-python -m grpc_tools.protoc -I protos/ --python_out=src/ --grpc_python_out=src/ protos/konlpy_homi/*/*.proto  
+python -m grpc_tools.protoc -I protos/ --python_out=src/ --grpc_python_out=src/ protos/konlpy_homi/api/*/*.proto
 ```
 
 ## Additional Links
