@@ -7,6 +7,7 @@ from services.komoran import komoran_svc
 from services.mecab import mecab_svc
 from services.okt import okt_svc
 
+
 app = App(
     services=[
         reflection_service,

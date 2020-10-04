@@ -1,16 +1,22 @@
+import grpc
 from grpc_requests import Client
 
 from ..typed import TupleMsg
+__DEFAULT_ENDPOINT = 'konlpy.whatilearened.today:443'
+__SSL = True
+__ENDPOINT: str = __DEFAULT_ENDPOINT
+__COMPRESSION = grpc.Compression.Gzip
 
-__ENDPOINT: str = 'localhost:50051'
 
-
-def set_endpoint(endpoint: str):
-    global __ENDPOINT
+def set_endpoint(endpoint: str,ssl=None,compression:grpc.Compression=grpc.Compression.Gzip):
+    global __ENDPOINT,__SSL
     __ENDPOINT = endpoint
+    __COMPRESSION = compression
+    if ssl is not None:
+        __SSL = ssl
 
 def get_service(service_name: str):
-    return Client.get_by_endpoint(__ENDPOINT).service(service_name)
+    return Client.get_by_endpoint(__ENDPOINT,ssl=__SSL,compression=__COMPRESSION).service(service_name)
 
 
 def make_request(phrase: str, options=None):
@@ -34,7 +40,9 @@ def make_join_able_return(results, options=None):
 def make_double_list_tuple_return(results):
     return [
         [
-            [make_tuple(tuple_msg) for tuple_msg in sub_group] for sub_group in group.get('results', [])
+            [
+                make_tuple(tuple_msg) for tuple_msg in sub_group.get('results',[])
+             ] for sub_group in group.get('results', [])
         ] for group in results
     ]
 

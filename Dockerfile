@@ -3,6 +3,7 @@ FROM python:3
 ENV PYTHONUNBUFFERED 1
 ENV PKG_DIR /tmp/pkg
 ENV SRC_DIR /opt
+ENV PORT 50051
 
 ENV JAVA_HOME /usr/lib/jvm/java-1.7-openjdk/jre
 RUN apt-get update
@@ -22,9 +23,6 @@ ARG CACHEBUST=1
 COPY src ${SRC_DIR}
 WORKDIR ${SRC_DIR}
 
-ENV PORT 50051
-EXPOSE ${PORT}
 ENV PYTHONPATH "${PYTONPATH}:${SRC_DIR}"
 
-ENTRYPOINT ["homi"]
-CMD ["run","konlpy_homi/app.py","-w","100","-p","50051"]
+CMD ["sh", "-c","homi run konlpy_homi/app.py -w 100 -p $PORT"]

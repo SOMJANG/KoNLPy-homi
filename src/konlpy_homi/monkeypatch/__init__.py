@@ -4,8 +4,8 @@
 
 # Usage:
 >>> import konlpy_homi
+>>> konlpy_homi.set_endpoint('localhost:50051')
 >>> konlpy_homi.patch()
->>> konlpy_homi.(server='[::]:50051')
 >>> import konlpy
 >>> konlpy.tag.Hannanum().pos('안녕 세상아!')  # Same As Usual...
 """
